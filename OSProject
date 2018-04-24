@@ -1,0 +1,40 @@
+lab=$1
+output=$2
+labnum="$(echo $lab | head -c 4 | tail -c 1)"
+question="$(echo $lab | head -c 5 | tail -c 1)"
+
+cd Labs
+
+labdir="Lab$labnum"
+echo $labdir
+if cd $labdir;
+	then
+		echo "Directory Exist"
+		for student_work in $(ls -d */);
+			do 
+				echo ${student_work%%/}
+				cd ${student_work%%/}
+				if [ -e "$lab.c" ];
+					then
+						echo "$lab.c Exist"
+						score=1
+						if gcc "$lab.c" -o "$lab";
+							then
+								echo "Compile Success"
+								score=$((score+1))
+																	else
+								echo "Fail"
+							fi
+						echo "Score : $score"	
+						
+				else
+					echo "Unsubmitted Work"
+				fi
+				cd ..
+			done
+	else
+		echo "No such Directory"
+		cd ..
+	fi
+
+
