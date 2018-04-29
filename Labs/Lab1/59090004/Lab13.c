@@ -4,7 +4,6 @@ int main()
 {
   int a;
  
-  printf("50");
- 
+  printf("40");
   return 0;
 }
