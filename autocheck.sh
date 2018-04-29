@@ -136,7 +136,7 @@ if [[ -d $labdir ]]; then
 						# write a result file
 						studir="$(pwd)"
 						cd $homedir
-						echo "${student_id%//};$score;" >> result$lab.txt
+						echo "${student_id%%/};$score;" >> result$lab.txt
 						cd $studir/..
 
 				else
