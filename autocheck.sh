@@ -42,6 +42,7 @@ examples:
 }
 
 remove_file(){
+	# check if file exist
 	if [[ -f $1 ]]; then
 		rm $1
 	fi
@@ -64,6 +65,7 @@ check_score(){
 		else
 			echo "Wrong"
 		fi
+		# clean up
 		remove_file $lab
 	else
 		echo "Compile Failed!"
@@ -118,8 +120,10 @@ if [[ -d $labdir ]]; then
 
 				if [[ -f "$lab.c" ]]; then
 						check_score
+						# check_score return 1(fail),2(wrong),3(pass)
 						score=$?
 
+						# sum up
 						echo "score = ${score}"
 						if [[ $score = 1 ]]; then
 							fail=$((fail+1))
@@ -129,6 +133,7 @@ if [[ -d $labdir ]]; then
 							pass=$((pass+1))
 						fi
 						
+						# write a result file
 						studir="$(pwd)"
 						cd $homedir
 						echo "${student_id%//};$score;" >> result$lab.txt
@@ -145,7 +150,7 @@ if [[ -d $labdir ]]; then
 		cd ..
 	fi
 
-
+# summary
 echo "=============="
 echo "Total students: $student_count"
 echo "Correct: $pass, Wrong: $wrong, Compile Fail: $fail, Unsubmit: $unsub"
