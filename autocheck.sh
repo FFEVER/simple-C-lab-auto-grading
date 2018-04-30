@@ -9,15 +9,17 @@ Example:
 	./autocheck.sh Lab11 20"
 
 	# check if number of argument is exceed 2
-	argv=$3
+	argv=$1
+	param1=$2
+	param2=$3
 	if [[ "$argv" -ne 1 ]] && [[ "$argv" -ne 2 ]]; then
+		echo "Error: \n\tIllegal number of parameters (expected 2)"
 		echo "$usage"
-		echo "Error: Illegal number of parameters (expected 2)"
 		return 3
 	fi
 
 	# check if $1 if "-help"
-	if [[ "$1" = "--help" ]] || [[ "$1" = "-h" ]]; then
+	if [[ "$param1" = "--help" ]]; then
 		echo "$usage"
 		echo
 		echo "autocheck -- program that automatically check the score of the student's lab
@@ -35,9 +37,9 @@ examples:
 	fi
 
 	# check if $1 or $2 is empty
-	if [[ "$1" = "" ]] || [[ "$2" = "" ]]; then
+	if [[ "$param1" = "" ]] || [[ "$param2" = "" ]]; then
+		echo "Error: \n\tYou are missing parameters (expected 2)"
 		echo "$usage"
-		echo "Error: You are missing parameters (expected 2)"
 		return 1
 	fi
 }
@@ -79,7 +81,7 @@ check_score(){
 ##=========================================================
 
 # check if parameters is correct
-check_parameter $1 $2 $#
+check_parameter $# $1 $2
 return_val=$?
 if [ $return_val != 0 ]; then
 	# if not then exit
